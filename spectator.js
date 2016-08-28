@@ -139,14 +139,14 @@ function touchingAlphaGreen(imgData, x, y, width, height){
 
   var retval = false;
   retval =
-    checkGreen(imgData, x-1, y-1, width, height) ||
+    // checkGreen(imgData, x-1, y-1, width, height) ||
     checkGreen(imgData, x-1, y, width, height) ||
-    checkGreen(imgData, x-1, y+1, width, height) ||
-    checkGreen(imgData, x, y-1, width, height) ||
-    checkGreen(imgData, x, y+1, width, height) ||
-    checkGreen(imgData, x+1, y-1, width, height) ||
-    checkGreen(imgData, x+1, y, width, height) ||
-    checkGreen(imgData, x+1, y+1, width, height);
+    // checkGreen(imgData, x-1, y+1, width, height) ||
+    // checkGreen(imgData, x, y-1, width, height) ||
+    // checkGreen(imgData, x, y+1, width, height) ||
+    // checkGreen(imgData, x+1, y-1, width, height) ||
+    checkGreen(imgData, x+1, y, width, height);// ||
+    // checkGreen(imgData, x+1, y+1, width, height);
 
   return retval;
 }
@@ -204,6 +204,7 @@ AFRAME.registerComponent('spectator',{
           document.querySelector(this.data.compDiv).appendChild(canv);
 
 
+
           // start the webcam
           var video = document.querySelector(this.data.camVideo);
           
@@ -222,6 +223,17 @@ AFRAME.registerComponent('spectator',{
              console.log("could not do video");
           }
 
+
+          // this is the webcam
+          this.fgv = document.querySelector(this.data.camVideo);
+          
+          // this is the spectator camera
+          this.bgc = document.querySelector(this.data.specDiv+" canvas");
+
+          // this is the target composite
+          this.canvs =  document.querySelector("#videoscreen");
+
+
         },
         'tick': function(time, timeDelta) {
 
@@ -233,7 +245,6 @@ AFRAME.registerComponent('spectator',{
 
           //one line version of the above
           var renderEveryNthFrame = Math.round(1000.0 / timeDelta / this.data.fps);
-
 
           if(this.counter % renderEveryNthFrame === 0){
             this.render(timeDelta);
@@ -253,22 +264,23 @@ AFRAME.registerComponent('spectator',{
         'renderComposite': function () {
 
           // this is the webcam
-          var foregroundVideo = document.querySelector(this.data.camVideo);
+          var foregroundVideo = this.fgv;
           
           // this is the spectator camera
-          var backgroundCanvas = document.querySelector(this.data.specDiv+" canvas");
+          var backgroundCanvas = this.bgc;
 
           // this is the target composite
-          var canvas =  document.querySelector("#videoscreen");
+          var canvas =  this.canvs;
 
           var width = foregroundVideo.width;
           var height = foregroundVideo.height;
           
-          canvas.setAttribute('width', width);
-          canvas.setAttribute('height', height);
+          if(canvas){
+                    canvas.setAttribute('width', width);
+                    canvas.setAttribute('height', height);
+          }
 
-
-          if(canvas.getContext){
+          if(canvas && canvas.getContext){
 
             // TODO not hapy with how img data obtained.  
             // draw seems wasteful as it is already on a canvas
@@ -329,21 +341,28 @@ AFRAME.registerComponent('spectator',{
 
             //     bO = bitOffset(x,y,width);
 
-            //     var r = foregroundVideoData.data[bO + 0];
-            //     var g = foregroundVideoData.data[bO + 1];
-            //     var b = foregroundVideoData.data[bO + 2];
-            //     var a = foregroundVideoData.data[bO + 3];
-            //     var gy = gray(r,g,b);
 
-            //     if(touchingAlphaGreen(alphaData,x,y,width,height) && 
-            //       alphaData.data[bO+1]==0) {
+                
 
-            //       // draw greyscale image at edge to reduce color bleeding from green screen
-            //       imgData.data[i + 0] = 255;
-            //       imgData.data[i + 1] = 0;
-            //       imgData.data[i + 2] = 0;
-            //       imgData.data[i + 3] = 255;
+            //     if( touchingAlphaGreen(alphaData,x,y,width,height)){
+            //       if( alphaData.data[bO+1]==0 ) {
+            //         //draw greyscale image at edge to reduce color bleeding from green screen
+            //         var r = foregroundVideoData.data[bO + 0];
+            //         var g = foregroundVideoData.data[bO + 1];
+            //         var b = foregroundVideoData.data[bO + 2];
+            //         var a = foregroundVideoData.data[bO + 3];
+
+            //         var gy = gray(r,g,b);
+
+            //         imgData.data[bO + 0] = gy;
+            //         imgData.data[bO + 1] = gy;
+            //         imgData.data[bO + 2] = gy;
+            //         imgData.data[bO + 3] = 255;
+            //       }  
+                  
             //     }
+
+
             //   }
             // }
 

@@ -34,7 +34,7 @@
 
           <div style="height:240px; width:320px;" id="hmdDiv">
             
-            <a-scene embedded>
+            <a-scene embedded stats>
 
               <a-sphere 
                 position="0 1.25 -1" 
@@ -74,7 +74,7 @@
 
               <a-entity id="secondaryCamera" position="2 1.8 4.8" rotation="-20 45 0">
                 <a-camera look-controls="hmdEnabled:false;" active="false"
-                  spectator="fps:15; 
+                  spectator="fps:30; 
                              specDiv:#spectatorDiv; 
                              camVideo:#videoElement; 
                              compDiv:#composite;
