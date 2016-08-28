@@ -8,8 +8,8 @@
           position: relative; 
           right: 0; 
           bottom: 0;
-          width: 300px; 
-          height: 300px; 
+          width: 320px; 
+          height: 240px; 
           z-index: -100;
           background-size: cover;
           overflow: hidden;
@@ -25,10 +25,11 @@
         <th><h1>HMD Scene</h1></th>
         <th><h1>Spectator Camera</h1></th>
         <th><h1>Web Cam</h1></th>
+        <th><h1>Composite</h1></th>
       </tr>    
       <tr>
         <td style="border-style:solid;">
-          <div style="height:300px; width:300px;">
+          <div style="height:240px; width:320px;">
             
             <a-scene embedded>
 
@@ -78,16 +79,26 @@
           </div>
         </td>
         <td style="border-style:solid;">
-          <div id="spectatorDiv" style="height:300px; width:300px;">
+          <div id="spectatorDiv" style="height:240px; width:320px;">
           </div>
         </td>
         <td style="border-style:solid;">
-          <div id="webcam" style="height:300px; width:300px;">
-            <video autoplay="true" id="videoElement" class="videoInsert">
+          <div id="webcam" style="height:240px; width:320px;">
+            <video autoplay="true" id="videoElement" class="videoInsert" width="320" height="240">
             </video>
+          </div>
+        </td>
+        <td style="border-style:solid;">
+          <div id="composite" style="height:240px; width:320px;">
+            <canvas id="videoscreen"></canvas>
           </div>
         </td>
       </tr>
     </table>
+
+    <div id="swatch" style="height:240px; width:320px;">
+      <canvas id="colorswatch"></canvas>
+    </div>
+
   </body>
 </html>
