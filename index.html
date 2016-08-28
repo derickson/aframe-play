@@ -4,32 +4,35 @@
     <script src="spectator.js"></script>
 
     <style type="text/css">
-      .videoInsert {
-          position: relative; 
-          right: 0; 
-          bottom: 0;
-          width: 320px; 
-          height: 240px; 
-          z-index: -100;
-          background-size: cover;
-          overflow: hidden;
+
+      /* #spectatorDiv {
+          position: absolute;
+          left:0;
+          top: -1000;
+      }*/
+
+      #hmdDiv {
+        position: absolute;
+        z-index: 100;
+        top:0;
+        left:0;
       }
+
+      #composite {
+        position: absolute;
+        z-index: -100;
+        top:0;
+        left:340px;
+      }
+
 
     </style>
 
 
   </head>
   <body>
-    <table style="border-style:solid;">
-      <tr>
-        <th><h1>HMD Scene</h1></th>
-        <th><h1>Spectator Camera</h1></th>
-        <th><h1>Web Cam</h1></th>
-        <th><h1>Composite</h1></th>
-      </tr>    
-      <tr>
-        <td style="border-style:solid;">
-          <div style="height:240px; width:320px;">
+
+          <div style="height:240px; width:320px;" id="hmdDiv">
             
             <a-scene embedded>
 
@@ -70,35 +73,32 @@
 
 
               <a-entity id="secondaryCamera" position="2 1.8 4.8" rotation="-20 45 0">
-                <a-camera spectator="canvas:#spectatorDiv; fps:30" active="false">
+                <a-camera look-controls="hmdEnabled:false;" active="false"
+                  spectator="fps:15; 
+                             specDiv:#spectatorDiv; 
+                             camVideo:#videoElement; 
+                             compDiv:#composite;
+                             gaussBlur:true">
                 </a-camera>
               </a-entity>
 
 
             </a-scene>
-          </div>
-        </td>
-        <td style="border-style:solid;">
-          <div id="spectatorDiv" style="height:240px; width:320px;">
-          </div>
-        </td>
-        <td style="border-style:solid;">
-          <div id="webcam" style="height:240px; width:320px;">
-            <video autoplay="true" id="videoElement" class="videoInsert" width="320" height="240">
+
+        
+          <div id="spectatorDiv" style="height:240px; width:320px;"></div>
+        
+          <!-- 640 x 480 -->
+          <div hidden id="webcam"  style="height:480px; width:640px;">
+            <video autoplay="true" id="videoElement" class="videoInsert" width="640" height="480">
             </video>
           </div>
-        </td>
-        <td style="border-style:solid;">
-          <div id="composite" style="height:240px; width:320px;">
-            <canvas id="videoscreen"></canvas>
-          </div>
-        </td>
-      </tr>
-    </table>
 
-    <div id="swatch" style="height:240px; width:320px;">
-      <canvas id="colorswatch"></canvas>
-    </div>
+          <div id="composite" style="height:480px; width:640px;">
+          </div>
+
+
+
 
   </body>
 </html>
